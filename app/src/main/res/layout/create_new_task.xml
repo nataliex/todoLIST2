@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <EditText
+        android:id="@+id/name_et"
+        android:textSize="30dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:layout_toEndOf="@+id/name_tv" />
+
+    <TextView
+        android:id="@+id/name_tv"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="45dp"
+        android:text="Name:"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/discription_et"
+        android:textSize="30dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/name_et"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/discription_tv" />
+
+    <TextView
+        android:id="@+id/discription_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="37dp"
+        android:text="Discription:"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/deadline_et"
+        android:textSize="30dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/discription_et"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="28dp"
+        android:layout_toEndOf="@+id/deadline_tv" />
+
+    <TextView
+        android:id="@+id/deadline_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discription_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:text="Deadline:"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="287dp"
+        android:text="Add"
+        android:textSize="50dp" />
+</RelativeLayout>
