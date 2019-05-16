@@ -27,11 +27,11 @@
 
     <ImageView
         android:id="@+id/star_mark"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="34dp"
         android:layout_toEndOf="@+id/task_name"
         android:background="@drawable/starmark" />
 

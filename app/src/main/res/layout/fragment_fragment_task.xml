@@ -52,15 +52,15 @@ tools:context=".FragmentTask">
         android:textSize="25dp"
         tools:text="ALSALDLADL:AKD:KDDKKADKA" />
 
-<ImageView
-    android:id="@+id/main_task_star_mark"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginStart="260dp"
-    android:layout_marginTop="19dp"
-    android:background="@drawable/starmark" />
+    <ImageView
+        android:id="@+id/main_task_star_mark"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="276dp"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/starmark" />
 
     <CheckBox
         android:id="@+id/main_task_checkbox"
@@ -74,12 +74,17 @@ tools:context=".FragmentTask">
     <Button
         android:id="@+id/add_task_button1"
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 =======
         android:layout_width="75dp"
         android:layout_height="75dp"
 >>>>>>> FirstCommit by Ruslan, edited xml
+=======
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+>>>>>>> first commit Ruslan
         android:layout_alignBottom="@+id/list_task"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
