@@ -45,13 +45,21 @@ public class Task{
     private ArrayList<Integer> mPath;
 
     @Ignore
+<<<<<<< HEAD
     Task(String name,String description,Date deadline,boolean isDone,Integer Id){
+=======
+    Task(String name,String description,Date deadline,boolean isDone,Integer Id, boolean StarMark){
+>>>>>>> FirstCommit by Ruslan, edited xml
         mName = name;
         mDescription = description;
         mDeadline = deadline;
         mIsDone = isDone;
         mId = Id;
         mPath = new ArrayList<Integer>();
+<<<<<<< HEAD
+=======
+        mStarMark = StarMark;
+>>>>>>> FirstCommit by Ruslan, edited xml
     }
 
     Task(String mName,Integer mParentId,Boolean mIsDone,Date mDeadline,

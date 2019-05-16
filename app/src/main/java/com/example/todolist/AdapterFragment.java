@@ -118,16 +118,42 @@ public class AdapterFragment extends Fragment {
         }
 
         @Override
+<<<<<<< HEAD
         public void onBindViewHolder(@NonNull ViewHolderTask viewHolderTask,final int i) {
                 viewHolderTask.textViewName.setText(mArrayTasks.get(i).getName());
                 viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
                 viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
+=======
+        public void onBindViewHolder(@NonNull final ViewHolderTask viewHolderTask, final int i) {
+
+                viewHolderTask.textViewName.setText(mArrayTasks.get(i).getName());
+                viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
+                viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
+
+
+                //Изменяет выполненность залачи
+                viewHolderTask.checkIsDone.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        toDoViewModel.changeIsDone(mArrayTasks.get(i));
+                    }
+                });
+
+                //отвечает за отображение, важная ли задача или нет
+                if (mArrayTasks.get(i).getStarMark())
+                    viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
+                else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
+
+>>>>>>> FirstCommit by Ruslan, edited xml
                 viewHolderTask.textViewName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         toDoViewModel.getObservableRootTasks().removeObservers(AdapterFragment.this);
                         changer.changeFragment(mArrayTasks.get(i).getId());
+<<<<<<< HEAD
 
+=======
+>>>>>>> FirstCommit by Ruslan, edited xml
                     }
                 });
         }

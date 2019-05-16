@@ -14,6 +14,7 @@
 
     <Button
         android:id="@+id/add_task_button"
+<<<<<<< HEAD
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -21,6 +22,16 @@
         android:layout_marginStart="166dp"
         android:layout_marginTop="508dp"
         android:text="ADD"
+=======
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="277dp"
+        android:layout_marginTop="455dp"
+        android:background="@drawable/selector_btn_add_task"
+        android:text="+"
+>>>>>>> FirstCommit by Ruslan, edited xml
         android:textSize="30dp" />
 
 </RelativeLayout>

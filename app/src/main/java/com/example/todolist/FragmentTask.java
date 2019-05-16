@@ -55,16 +55,44 @@ public class FragmentTask extends Fragment {
         tempView = inflater.inflate(R.layout.fragment_fragment_task, container, false);
 
         final FragmentTask.AdapterTask adapterTask = new FragmentTask.AdapterTask();
+<<<<<<< HEAD
         TextView mainTaskName =  tempView.findViewById(R.id.main_task_name);
         TextView mainTaskNameDeadline =  tempView.findViewById(R.id.main_task_name_deadline);
         TextView mainTaskDescriptions =  tempView.findViewById(R.id.main_task_descriptions);
         CheckBox mainTaskCheckbox = tempView.findViewById(R.id.main_task_checkbox);
         Task mainTask = toDoViewModel.getTask(taskId);
+=======
+
+        TextView mainTaskName =  tempView.findViewById(R.id.main_task_name);
+        TextView mainTaskNameDeadline =  tempView.findViewById(R.id.main_task_name_deadline);
+        TextView mainTaskDescriptions =  tempView.findViewById(R.id.main_task_descriptions);
+        final CheckBox mainTaskCheckbox = tempView.findViewById(R.id.main_task_checkbox);
+        ImageView mainTaskStarMark = tempView.findViewById(R.id.main_task_star_mark);
+
+        final Task mainTask = toDoViewModel.getTask(taskId);
+
+>>>>>>> FirstCommit by Ruslan, edited xml
         mainTaskNameDeadline.setText(mainTask.getDeadline().toString());
         mainTaskName.setText(mainTask.getName());
         mainTaskDescriptions.setText(mainTask.getDescription());
         mainTaskCheckbox.setChecked(mainTask.getIsDone());
 
+<<<<<<< HEAD
+=======
+        if (mainTask.getStarMark()) mainTaskStarMark.setVisibility(View.VISIBLE);
+        else mainTaskStarMark.setVisibility(View.INVISIBLE);
+
+        if (mainTask.getIsDone()) mainTaskCheckbox.setChecked(true);
+        else mainTaskCheckbox.setChecked(false);
+
+        mainTaskCheckbox.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                toDoViewModel.changeIsDone(mainTask);
+            }
+        });
+
+>>>>>>> FirstCommit by Ruslan, edited xml
         RecyclerView recyclerViewTask = tempView.findViewById(R.id.list_task1);
         recyclerViewTask.setAdapter(adapterTask);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -142,6 +170,12 @@ public class FragmentTask extends Fragment {
             viewHolderTask.textViewName.setText(mArrayTasks.get(i).getName());
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
+<<<<<<< HEAD
+=======
+            if (mArrayTasks.get(i).getStarMark())
+            viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
+            else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
+>>>>>>> FirstCommit by Ruslan, edited xml
         }
 
         @Override

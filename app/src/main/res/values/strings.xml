@@ -1,5 +1,9 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">todoLIST</string>
+=======
+    <string name="app_name">Список задач</string>
+>>>>>>> FirstCommit by Ruslan, edited xml
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

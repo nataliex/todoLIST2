@@ -6,6 +6,7 @@
 
     <EditText
         android:id="@+id/name_et"
+<<<<<<< HEAD
         android:textSize="30dp"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -17,16 +18,35 @@
     <TextView
         android:id="@+id/name_tv"
 
+=======
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        tools:text="Привет"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+>>>>>>> FirstCommit by Ruslan, edited xml
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
         android:layout_marginStart="21dp"
         android:layout_marginTop="45dp"
+=======
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+>>>>>>> FirstCommit by Ruslan, edited xml
         android:text="Name:"
         android:textSize="30dp" />
 
     <EditText
+<<<<<<< HEAD
         android:id="@+id/discription_et"
         android:textSize="30dp"
         android:layout_width="200dp"
@@ -35,20 +55,40 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="26dp"
         android:layout_toEndOf="@+id/discription_tv" />
+=======
+        android:id="@+id/description_et"
+        android:layout_width="337dp"
+        android:layout_height="140dp"
+        android:layout_below="@+id/deadline_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="52dp"
+        android:minHeight="50dp"
+        android:textSize="20sp" />
+>>>>>>> FirstCommit by Ruslan, edited xml
 
     <TextView
         android:id="@+id/discription_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_below="@+id/name_tv"
         android:layout_alignParentStart="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="37dp"
         android:text="Discription:"
+=======
+        android:layout_below="@+id/deadline_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="Description:"
+>>>>>>> FirstCommit by Ruslan, edited xml
         android:textSize="30dp" />
 
     <EditText
         android:id="@+id/deadline_et"
+<<<<<<< HEAD
         android:textSize="30dp"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -56,11 +96,21 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="28dp"
         android:layout_toEndOf="@+id/deadline_tv" />
+=======
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/name_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="20sp" />
+>>>>>>> FirstCommit by Ruslan, edited xml
 
     <TextView
         android:id="@+id/deadline_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_below="@+id/discription_tv"
         android:layout_alignParentStart="true"
         android:layout_marginStart="24dp"
@@ -78,4 +128,54 @@
         android:layout_marginTop="287dp"
         android:text="Add"
         android:textSize="50dp" />
+=======
+        android:layout_below="@+id/name_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="Deadline:"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/set_starmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discription_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="182dp"
+        android:text="Great?"
+        android:textSize="30dp" />
+
+    <CheckBox
+        android:id="@+id/cb_starmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="474dp"
+        android:layout_toEndOf="@+id/set_starmark" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="266dp"
+        android:layout_marginTop="492dp"
+        android:background="@drawable/selector_btn_add_task"
+        android:text="✓"
+        android:textSize="50dp" />
+
+    <ImageView
+        android:id="@+id/create_starmark"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="459dp"
+        android:background="@drawable/starmark" />
+>>>>>>> FirstCommit by Ruslan, edited xml
 </RelativeLayout>
