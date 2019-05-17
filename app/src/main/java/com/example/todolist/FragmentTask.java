@@ -78,7 +78,7 @@ public class FragmentTask extends Fragment {
                 curId++;
                 Intent tempIntent = new Intent(getActivity(), CreateNewTaskActivity.class);
                 tempIntent.putExtra(EXTRA_VALUE, curId);
-                tempIntent.putExtra("isRoot",taskId);
+                tempIntent.putExtra("Root",taskId);
                 startActivity(tempIntent);
             }
         });

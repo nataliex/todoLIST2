@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CreateNewTaskActivity extends Activity {
@@ -39,7 +40,7 @@ public class CreateNewTaskActivity extends Activity {
         etDiscrription = findViewById(R.id.discription_et);
         etDeadline = findViewById(R.id.deadline_et);
 
-        Bundle temp = getIntent().getExtras();
+        final Bundle temp = getIntent().getExtras();
         curId = temp.getInt("EXTRA_VALUE");
 
         Button btnAddTask = findViewById(R.id.btn_add);
@@ -56,8 +57,10 @@ public class CreateNewTaskActivity extends Activity {
             btnAddTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toDoViewModel.insertTask(lr.receiveTask(taskId),new Task(etName.getText().toString(), etDiscrription.getText().toString()
-                            , new Date(1000), false, curId));
+                    ArrayList<Integer> tempArrayList = new ArrayList<>();
+                    tempArrayList.add(taskId);
+                    toDoViewModel.insertTask(lr.receiveTask(taskId),new Task(etName.getText().toString(), taskId, false, new Date(1000),
+                            etDiscrription.getText().toString(), tempArrayList, curId, false));
                 }
             });
         }

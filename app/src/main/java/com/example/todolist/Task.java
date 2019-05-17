@@ -44,18 +44,18 @@ public class Task{
     @TypeConverters({ArrayListConverter.class})
     private ArrayList<Integer> mPath;
 
-    @Ignore
+
     Task(String name,String description,Date deadline,boolean isDone,Integer Id){
         mName = name;
         mDescription = description;
         mDeadline = deadline;
         mIsDone = isDone;
         mId = Id;
-        mPath = new ArrayList<Integer>();
+       // mPath = new ArrayList<Integer>();
     }
 
     Task(String mName,Integer mParentId,Boolean mIsDone,Date mDeadline,
-         String mDescription,ArrayList<Integer> mPath,Integer mId,Boolean mStarMark){
+         String mDescription,ArrayList<Integer> mPath, Integer mId,Boolean mStarMark){
         this.mName = mName;
         this.mId = mId;
         this.mDescription = mDescription;
