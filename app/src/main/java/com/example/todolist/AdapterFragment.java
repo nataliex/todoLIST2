@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,8 @@ public class AdapterFragment extends Fragment {
     ListRepository lr = null;
     Changer changer;
 
+    SharedPreferences sharedPreferencesCurId;
+
     @Override
     public void onAttach(Context context) {
         try {
@@ -50,7 +54,9 @@ public class AdapterFragment extends Fragment {
        // super.onCreateView(inflater, container, savedInstanceState);
 
         View tempView;
-
+        sharedPreferencesCurId = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final SharedPreferences.Editor editor = sharedPreferencesCurId.edit();
+        curId = sharedPreferencesCurId.getInt("CUR_ID", 0);
         tempView = inflater.inflate(R.layout.adapter_fragment, container, false);
 
 
@@ -69,6 +75,10 @@ public class AdapterFragment extends Fragment {
                 Intent tempIntent = new Intent(getActivity(), CreateNewTaskActivity.class);
                 tempIntent.putExtra(EXTRA_VALUE, curId);
                 tempIntent.putExtra("Root",-1);
+
+                editor.putInt("CUR_ID", curId);
+                editor.apply();
+
                 startActivity(tempIntent);
             }
         });
