@@ -51,7 +51,7 @@ public class Task{
         mDeadline = deadline;
         mIsDone = isDone;
         mId = Id;
-       // mPath = new ArrayList<Integer>();
+        mPath = new ArrayList<Integer>();
     }
 
     Task(String mName,Integer mParentId,Boolean mIsDone,Date mDeadline,

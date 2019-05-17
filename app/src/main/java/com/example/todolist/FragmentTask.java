@@ -3,7 +3,9 @@ package com.example.todolist;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,8 @@ import java.util.List;
 public class FragmentTask extends Fragment {
     ToDoViewModel toDoViewModel;
     private int taskId;
+    SharedPreferences sharedPreferencesCurId;
+
     //При возвращении в активити никто не изменяет значения taskid и оно инициализируется значением
     //по умолчание - нулём.Для решения этой проблемы необходимо во ViewModel хранить id таска,можно помимо этого хранить
     //и саму таску,и массив известных про неё данных
@@ -36,9 +40,15 @@ public class FragmentTask extends Fragment {
     static int curId;
     ToDoListDatabase tdld = null;
     ListRepository lr = null;
+    Changer changer;
 
     @Override
     public void onAttach(Context context) {
+        try {
+            changer = (Changer) context;
+        } catch(Exception exception){
+            Log.d("ImplmenetException","Context has not implemented Changer");
+        }
         super.onAttach(context);
         tdld = ToDoListDatabase.getDatabase(context.getApplicationContext());//Общатсья через ViewModel
         lr = new ListRepository(tdld);
@@ -51,6 +61,10 @@ public class FragmentTask extends Fragment {
 
         View tempView;
 
+
+        sharedPreferencesCurId = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final SharedPreferences.Editor editor = sharedPreferencesCurId.edit();
+        curId = sharedPreferencesCurId.getInt("CUR_ID", 0);
 
         tempView = inflater.inflate(R.layout.fragment_fragment_task, container, false);
 
@@ -79,6 +93,10 @@ public class FragmentTask extends Fragment {
                 Intent tempIntent = new Intent(getActivity(), CreateNewTaskActivity.class);
                 tempIntent.putExtra(EXTRA_VALUE, curId);
                 tempIntent.putExtra("Root",taskId);
+
+                editor.putInt("CUR_ID", curId);
+                editor.apply();
+
                 startActivity(tempIntent);
             }
         });
@@ -138,10 +156,18 @@ public class FragmentTask extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull FragmentTask.AdapterTask.ViewHolderTask viewHolderTask, int i) {
+        public void onBindViewHolder(@NonNull FragmentTask.AdapterTask.ViewHolderTask viewHolderTask, final int i) {
             viewHolderTask.textViewName.setText(mArrayTasks.get(i).getName());
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
+            viewHolderTask.textViewName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toDoViewModel.getObservableRootTasks().removeObservers(FragmentTask.this);
+                    changer.changeFragment(mArrayTasks.get(i).getId());
+
+                }
+            });
         }
 
         @Override
