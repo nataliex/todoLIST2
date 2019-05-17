@@ -6,13 +6,13 @@
 
     <EditText
         android:id="@+id/name_et"
-        android:textSize="30dp"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="46dp"
-        android:layout_toEndOf="@+id/name_tv" />
+        android:layout_marginEnd="20dp"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/name_tv"
@@ -21,61 +21,94 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="45dp"
         android:text="Name:"
         android:textSize="30dp" />
 
     <EditText
         android:id="@+id/discription_et"
-        android:textSize="30dp"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/name_et"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/discription_tv" />
+        android:layout_width="335dp"
+        android:layout_height="162dp"
+        android:layout_below="@+id/discription_tv"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/discription_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name_tv"
+        android:layout_below="@+id/deadline_tv"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
         android:text="Discription:"
         android:textSize="30dp" />
 
     <EditText
         android:id="@+id/deadline_et"
-        android:textSize="30dp"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/discription_et"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="28dp"
-        android:layout_toEndOf="@+id/deadline_tv" />
+        android:layout_below="@+id/name_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/deadline_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/discription_tv"
+        android:layout_below="@+id/name_tv"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
         android:text="Deadline:"
         android:textSize="30dp" />
 
     <Button
         android:id="@+id/btn_add"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/selector_btn_add_task"
+        android:text="✓"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/set_starmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/discription_et"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:text="Great?"
+        android:textSize="30dp" />
+
+    <CheckBox
+        android:id="@+id/cb_starmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="480dp"
+        android:layout_toEndOf="@+id/set_starmark" />
+
+    <ImageView
+        android:id="@+id/create_starmark"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="287dp"
-        android:text="Add"
-        android:textSize="50dp" />
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="465dp"
+        android:background="@drawable/starmark" />
 </RelativeLayout>

@@ -69,15 +69,32 @@ public class FragmentTask extends Fragment {
         tempView = inflater.inflate(R.layout.fragment_fragment_task, container, false);
 
         final FragmentTask.AdapterTask adapterTask = new FragmentTask.AdapterTask();
+
         TextView mainTaskName =  tempView.findViewById(R.id.main_task_name);
         TextView mainTaskNameDeadline =  tempView.findViewById(R.id.main_task_name_deadline);
         TextView mainTaskDescriptions =  tempView.findViewById(R.id.main_task_descriptions);
         CheckBox mainTaskCheckbox = tempView.findViewById(R.id.main_task_checkbox);
-        Task mainTask = toDoViewModel.getTask(taskId);
+        ImageView mainTaskStarMark = tempView.findViewById(R.id.main_task_star_mark);
+
+        final Task mainTask = toDoViewModel.getTask(taskId);
+
         mainTaskNameDeadline.setText(mainTask.getDeadline().toString());
         mainTaskName.setText(mainTask.getName());
         mainTaskDescriptions.setText(mainTask.getDescription());
         mainTaskCheckbox.setChecked(mainTask.getIsDone());
+
+        if (mainTask.getStarMark()) mainTaskStarMark.setVisibility(View.VISIBLE);
+        else mainTaskStarMark.setVisibility(View.INVISIBLE);
+
+        if (mainTask.getIsDone()) mainTaskCheckbox.setChecked(true);
+        else mainTaskCheckbox.setChecked(false);
+
+        mainTaskCheckbox.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                toDoViewModel.changeIsDone(mainTask);
+            }
+        });
 
         RecyclerView recyclerViewTask = tempView.findViewById(R.id.list_task1);
         recyclerViewTask.setAdapter(adapterTask);
@@ -160,6 +177,19 @@ public class FragmentTask extends Fragment {
             viewHolderTask.textViewName.setText(mArrayTasks.get(i).getName());
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
+
+            if (mArrayTasks.get(i).getStarMark())
+                viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
+            else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
+
+            //Изменяет выполненность залачи
+            viewHolderTask.checkIsDone.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    toDoViewModel.changeIsDone(mArrayTasks.get(i));
+                }
+            });
+
             viewHolderTask.textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

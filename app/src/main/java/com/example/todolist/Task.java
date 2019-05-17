@@ -45,13 +45,14 @@ public class Task{
     private ArrayList<Integer> mPath;
 
 
-    Task(String name,String description,Date deadline,boolean isDone,Integer Id){
+    Task(String name,String description,Date deadline,boolean isDone,Integer Id, boolean StarMark){
         mName = name;
         mDescription = description;
         mDeadline = deadline;
         mIsDone = isDone;
         mId = Id;
         mPath = new ArrayList<Integer>();
+        mStarMark = StarMark;
     }
 
     Task(String mName,Integer mParentId,Boolean mIsDone,Date mDeadline,

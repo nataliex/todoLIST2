@@ -29,6 +29,7 @@ tools:context=".FragmentTask">
 
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/main_task_name_deadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,15 +74,14 @@ tools:context=".FragmentTask">
 
     <Button
         android:id="@+id/add_task_button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/list_task"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="530dp"
-        android:layout_marginBottom="329dp"
-        android:text="ADD"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/selector_btn_add_task"
+        android:text="+"
         android:textSize="30dp" />
 
     <android.support.v7.widget.RecyclerView
