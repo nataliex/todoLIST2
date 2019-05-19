@@ -45,10 +45,6 @@ public class CreateNewTaskActivity extends Activity {
         tvDiscrription = findViewById(R.id.discription_tv);
         tvDeadline = findViewById(R.id.deadline_tv);
 
-        etName = findViewById(R.id.name_et);
-        etDiscrription = findViewById(R.id.discription_et);
-        etDeadline = findViewById(R.id.deadline_et);
-
         tvSetStarmark = findViewById(R.id.set_starmark);
 
         etName = findViewById(R.id.name_et);
@@ -80,8 +76,11 @@ public class CreateNewTaskActivity extends Activity {
                 public void onClick(View v) {//Хранить cur в sharedpreferences
                     toDoViewModel.insertRootTask(new Task(etName.getText().toString(), etDiscrription.getText().toString()
                             , new Date(1000), false, curId, cbStarmark.isChecked()));
+                    CreateNewTaskActivity.super.finish();
                 }
+
             });
+
         }else{
             final int taskId = temp.getInt("Root");
             btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -89,10 +88,12 @@ public class CreateNewTaskActivity extends Activity {
                 public void onClick(View v) {
                     ArrayList<Integer> tempArrayList = new ArrayList<>();
                     tempArrayList.add(taskId);
-                    toDoViewModel.insertTask(lr.receiveTask(taskId),new Task(etName.getText().toString(), taskId, false, new Date(1000),
-                            etDiscrription.getText().toString(), tempArrayList, curId, cbStarmark.isChecked()));
+                    toDoViewModel.insertTask(lr.receiveTask(taskId),new Task(etName.getText().toString(), etDiscrription.getText().toString()
+                            , new Date(1000), false, curId, cbStarmark.isChecked()));
+                    CreateNewTaskActivity.super.finish();
                 }
             });
+
         }
     }
 }

@@ -28,7 +28,7 @@
 
     <EditText
         android:id="@+id/discription_et"
-        android:layout_width="335dp"
+        android:layout_width="wrap_content"
         android:layout_height="162dp"
         android:layout_below="@+id/discription_tv"
         android:layout_alignParentStart="true"
@@ -46,7 +46,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
-        android:text="Discription:"
+        android:text="Description:"
         android:textSize="30dp" />
 
     <EditText
@@ -111,4 +111,13 @@
         android:layout_marginStart="178dp"
         android:layout_marginTop="465dp"
         android:background="@drawable/starmark" />
+
+    <CalendarView
+        android:selectedWeekBackgroundColor="@drawable/button_add_task_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="268dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="233dp"></CalendarView>
 </RelativeLayout>

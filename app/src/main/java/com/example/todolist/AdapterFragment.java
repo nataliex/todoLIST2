@@ -13,13 +13,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +74,7 @@ public class AdapterFragment extends Fragment {
         addTaskButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 curId++;
                 Intent tempIntent = new Intent(getActivity(), CreateNewTaskActivity.class);
                 tempIntent.putExtra(EXTRA_VALUE, curId);
@@ -112,11 +116,16 @@ public class AdapterFragment extends Fragment {
 
             public ViewHolderTask(@NonNull View itemView) {
                 super(itemView);
+
                 textViewName = itemView.findViewById(R.id.task_name);
                 textViewDeadline = itemView.findViewById(R.id.dead_line);
                 checkIsDone = itemView.findViewById(R.id.check_is_done);
                 imageStarMark = itemView.findViewById(R.id.star_mark);
+
+                //textViewName.setOnCreateContextMenuListener(this);
             }
+
+
         }
 
         @NonNull
@@ -134,12 +143,15 @@ public class AdapterFragment extends Fragment {
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
 
+            //Регистрируем контекстное меню для вьюшки имени.
+            //registerForContextMenu(viewHolderTask.textViewName);
+            viewHolderTask.textViewName.setOnCreateContextMenuListener(getActivity());
             //отвечает за отображение, важная ли задача или нет
             if (mArrayTasks.get(i).getStarMark())
                 viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
             else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
 
-            //Изменяет выполненность залачи
+            //Изменяет выполненность задачи
             viewHolderTask.checkIsDone.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -162,5 +174,28 @@ public class AdapterFragment extends Fragment {
             return mArrayTasks.size();
         }
 
+
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(super.getId(), 0, 0, "Удалить");
+        menu.add(super.getId(), 1, 1, "Редактировать");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case 0:
+                toDoViewModel.deleteRootTask(item.getGroupId());
+                break;
+
+            case 1:
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 }

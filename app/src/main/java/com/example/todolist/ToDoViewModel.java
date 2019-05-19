@@ -55,6 +55,10 @@ public class ToDoViewModel extends AndroidViewModel {
         lr.insertTask(task);
     }
 
+    public void deleteRootTask(int Id){
+        lr.deleteTask(getTask(Id));
+    }
+
     public List<Task> getRootTasks(){
         return lr.receiveRootTasks();
     }

@@ -8,6 +8,8 @@ import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
