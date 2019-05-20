@@ -2,6 +2,7 @@ package com.example.todolist;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.room.Ignore;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,36 +31,41 @@ import java.util.zip.Inflater;
 
 public class AdapterFragment extends Fragment {
     ToDoViewModel toDoViewModel;
-    public static final String EXTRA_VALUE = "EXTRA_VALUE";
-    static int curId;
-    ToDoListDatabase tdld= null;
-    ListRepository lr = null;
-    Changer changer;
 
-    SharedPreferences sharedPreferencesCurId;
+    public static final int FRAGMENT_TASK = 0;
+    public static final int EDIT_TASK_FRAGMENT = 1;
+
+    Changer changer;
+    public ArrayList<Task> mArrayTasks;
+    //Убрал переменные listrepository,todolistdatabase
+
 
     @Override
     public void onAttach(Context context) {
+        Log.d("Start","OnAttach");
         try {
             changer = (Changer) context;
         } catch(Exception exception){
             Log.d("ImplmenetException","Context has not implemented Changer");
         }
         super.onAttach(context);
-        tdld = ToDoListDatabase.getDatabase(context.getApplicationContext());//Общатсья через ViewModel
-        lr = new ListRepository(tdld);
-        toDoViewModel = new ToDoViewModel(getActivity().getApplication());
+        Bundle bundle = this.getArguments();
+        int curQuest = bundle.getInt("key", -1);//todo убрать bundle curquest
+        Log.d("Fast","---------------");
+        toDoViewModel = ViewModelProviders.of(this,
+                new ToDoListFactory(getActivity().getApplication(),curQuest)).get(ToDoViewModel.class); //TODO Меняю передаваемое значение
+                                                                                                         //TODO taskId в надежде сделать разные запросы
+        Log.d("Fast","---------------");
+        Log.d("End","OnAttach");
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       // super.onCreateView(inflater, container, savedInstanceState);
-
+        Log.d("Start","OnCreateView");
         View tempView;
-        sharedPreferencesCurId = PreferenceManager.getDefaultSharedPreferences(getContext());
-        final SharedPreferences.Editor editor = sharedPreferencesCurId.edit();
-        curId = sharedPreferencesCurId.getInt("CUR_ID", 0);
+
         tempView = inflater.inflate(R.layout.adapter_fragment, container, false);
 
 
@@ -75,39 +81,34 @@ public class AdapterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                curId++;
                 Intent tempIntent = new Intent(getActivity(), CreateNewTaskActivity.class);
-                tempIntent.putExtra(EXTRA_VALUE, curId);
                 tempIntent.putExtra("Root",-1);
-
-                editor.putInt("CUR_ID", curId);
-                editor.apply();
-
                 startActivity(tempIntent);
+
             }
         });
         return tempView;
     }
 
-    class AdapterTask extends RecyclerView.Adapter<AdapterTask.ViewHolderTask> {
+    class AdapterTask extends RecyclerView.Adapter<AdapterTask.ViewHolderTask>{
 
-        private ArrayList<Task> mArrayTasks;
+
 
         public AdapterTask(){
-                mArrayTasks = new ArrayList<>();
-                Observer<List<Task>> observer = new Observer<List<Task>>() {
-                    @Override
-                    public void onChanged(@Nullable final List<Task> tasks) {
-                        mArrayTasks.clear();
-                        mArrayTasks.addAll(tasks);
-                        AdapterTask.super.notifyDataSetChanged();
-                        Log.d("DataObserved!","DataObserved!");
-                    }
-                };
-                toDoViewModel.getObservableRootTasks().observe(AdapterFragment.this,observer);//TODO Общение с бд в основном потоке и где то еще второе есть
+            mArrayTasks = new ArrayList<>();
+            Observer<List<Task>> observer = new Observer<List<Task>>() {
+                @Override
+                public void onChanged(@Nullable final List<Task> tasks) {
+                    mArrayTasks.clear();
+                    mArrayTasks.addAll(tasks);
+                    AdapterFragment.AdapterTask.super.notifyDataSetChanged();
+                    Log.d("DataObserved!","DataObserved!");
+                }
+            };
+            toDoViewModel.getCurrentTasks().observe(AdapterFragment.this,observer);
         }
 
-        class ViewHolderTask extends RecyclerView.ViewHolder{
+        class ViewHolderTask extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
             TextView textViewName;
             TextView textViewDeadline;
@@ -116,16 +117,21 @@ public class AdapterFragment extends Fragment {
 
             public ViewHolderTask(@NonNull View itemView) {
                 super(itemView);
-
                 textViewName = itemView.findViewById(R.id.task_name);
                 textViewDeadline = itemView.findViewById(R.id.dead_line);
                 checkIsDone = itemView.findViewById(R.id.check_is_done);
                 imageStarMark = itemView.findViewById(R.id.star_mark);
 
-                //textViewName.setOnCreateContextMenuListener(this);
+                //Регистрируем контекстное меню на textViewName
+                textViewName.setOnCreateContextMenuListener(this);
             }
 
-
+            //Создаем контекстное меню при длительном нажатии
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(getAdapterPosition(), 1, 0, "Удалить");
+                menu.add(getAdapterPosition(), 2, 0, "Редактировать");
+            }
         }
 
         @NonNull
@@ -143,15 +149,12 @@ public class AdapterFragment extends Fragment {
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
 
-            //Регистрируем контекстное меню для вьюшки имени.
-            //registerForContextMenu(viewHolderTask.textViewName);
-            viewHolderTask.textViewName.setOnCreateContextMenuListener(getActivity());
-            //отвечает за отображение, важная ли задача или нет
+            //Отвечает за отображение, важная ли задача или нет
             if (mArrayTasks.get(i).getStarMark())
                 viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
             else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
 
-            //Изменяет выполненность задачи
+            //Изменяет выполненность залачи
             viewHolderTask.checkIsDone.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -159,43 +162,41 @@ public class AdapterFragment extends Fragment {
                 }
             });
 
+            //Нажимаем на задачу и переходим к ее содержимому
             viewHolderTask.textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toDoViewModel.getObservableRootTasks().removeObservers(AdapterFragment.this);
-                    changer.changeFragment(mArrayTasks.get(i).getId());
-
+                    toDoViewModel.getCurrentTasks().removeObservers(AdapterFragment.this);
+                    changer.changeFragment(mArrayTasks.get(i).getId(), FRAGMENT_TASK);
                 }
             });
         }
-
         @Override
         public int getItemCount() {
             return mArrayTasks.size();
         }
-
-
-
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add(super.getId(), 0, 0, "Удалить");
-        menu.add(super.getId(), 1, 1, "Редактировать");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case 0:
-                toDoViewModel.deleteRootTask(item.getGroupId());
-                break;
+        //В зависимости оттого, что нажато - удаление или редактирование.
+        if (item.getItemId() == 1) {
 
-            case 1:
-                break;
+            //Прежде, чем удалять задачу, удалим все ее подзадачи
+            for (Task t : toDoViewModel.getChildTasks(toDoViewModel.getTask(mArrayTasks.get(item.getGroupId()).getId()))) {
+                toDoViewModel.deleteTask(t);
+            }
+
+            //Удалим саму задачу, найдя ее айдишник в mArrayTasks
+            toDoViewModel.deleteTask(toDoViewModel.getTask(mArrayTasks.get(item.getGroupId()).getId()));
+        }else{
+
+            toDoViewModel.getCurrentTasks().removeObservers(AdapterFragment.this);
+            changer.changeFragment(mArrayTasks.get(item.getGroupId()).getId(), EDIT_TASK_FRAGMENT);
         }
 
         return super.onContextItemSelected(item);
     }
+
 }

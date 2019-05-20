@@ -1,6 +1,7 @@
 package com.example.todolist;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +13,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,7 +29,10 @@ import java.util.List;
 public class FragmentTask extends Fragment {
     ToDoViewModel toDoViewModel;
     private int taskId;
-    SharedPreferences sharedPreferencesCurId;
+    public ArrayList<Task> mArrayTasks;
+
+    public static final int FRAGMENT_TASK = 0;
+    public static final int EDIT_TASK_FRAGMENT = 1;
 
     //При возвращении в активити никто не изменяет значения taskid и оно инициализируется значением
     //по умолчание - нулём.Для решения этой проблемы необходимо во ViewModel хранить id таска,можно помимо этого хранить
@@ -38,8 +44,6 @@ public class FragmentTask extends Fragment {
 
     public static final String EXTRA_VALUE = "EXTRA_VALUE";
     static int curId;
-    ToDoListDatabase tdld = null;
-    ListRepository lr = null;
     Changer changer;
 
     @Override
@@ -50,9 +54,8 @@ public class FragmentTask extends Fragment {
             Log.d("ImplmenetException","Context has not implemented Changer");
         }
         super.onAttach(context);
-        tdld = ToDoListDatabase.getDatabase(context.getApplicationContext());//Общатсья через ViewModel
-        lr = new ListRepository(tdld);
-        toDoViewModel = new ToDoViewModel(getActivity().getApplication());
+        toDoViewModel = ViewModelProviders.of(this,
+                new ToDoListFactory(getActivity().getApplication(),taskId)).get(ToDoViewModel.class);
     }
 
     @Nullable
@@ -60,11 +63,6 @@ public class FragmentTask extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View tempView;
-
-
-        sharedPreferencesCurId = PreferenceManager.getDefaultSharedPreferences(getContext());
-        final SharedPreferences.Editor editor = sharedPreferencesCurId.edit();
-        curId = sharedPreferencesCurId.getInt("CUR_ID", 0);
 
         tempView = inflater.inflate(R.layout.fragment_fragment_task, container, false);
 
@@ -76,7 +74,7 @@ public class FragmentTask extends Fragment {
         CheckBox mainTaskCheckbox = tempView.findViewById(R.id.main_task_checkbox);
         ImageView mainTaskStarMark = tempView.findViewById(R.id.main_task_star_mark);
 
-        final Task mainTask = toDoViewModel.getTask(taskId);
+        final Task mainTask = toDoViewModel.getCurrentTask();
 
         mainTaskNameDeadline.setText(mainTask.getDeadline().toString());
         mainTaskName.setText(mainTask.getName());
@@ -111,10 +109,8 @@ public class FragmentTask extends Fragment {
                 tempIntent.putExtra(EXTRA_VALUE, curId);
                 tempIntent.putExtra("Root",taskId);
 
-                editor.putInt("CUR_ID", curId);
-                editor.apply();
-
                 startActivity(tempIntent);
+
             }
         });
         return tempView;
@@ -122,33 +118,24 @@ public class FragmentTask extends Fragment {
 
     class AdapterTask extends RecyclerView.Adapter<FragmentTask.AdapterTask.ViewHolderTask> {
 
-        private ArrayList<Task> mArrayTasks;
+
 
         public AdapterTask() {
-            Task task = lr.receiveTask(taskId);
-            Log.d("Current task",task.getName());
-            Log.d("Current task id",task.getId().toString());
-            for (Task t:toDoViewModel.getChildTasks(task)) {//TODO Общение с бд в основном потоке
-                Log.d("ChildTask:",t.getName());
-            }
-            mArrayTasks = (ArrayList<Task>) toDoViewModel.getChildTasks(task);
+            //убрал toDoViewModel.get(Task mTask) тк сидит в main thread'e
+            mArrayTasks = new ArrayList<Task>();
             Observer<List<Task>> observer = new Observer<List<Task>>() {
                 @Override
                 public void onChanged(@Nullable List<Task> tasks) {
-                    for (Task t: tasks) {
-                        Log.d("AllTasks",t.getName());
-                        Log.d("ParentIdOfTasks",t.getParentId().toString());
-                    }
                     mArrayTasks.clear();
                     mArrayTasks.addAll(tasks);
                     FragmentTask.AdapterTask.super.notifyDataSetChanged();
                     Log.d("DataObserved!","DataObserved!");
                 }
             };
-            toDoViewModel.getObservableChildTasks(task).observe(FragmentTask.this,observer);
+            toDoViewModel.getCurrentTasks().observe(FragmentTask.this,observer);//Ошибка - надо передавать не только таску
         }
 
-            class ViewHolderTask extends RecyclerView.ViewHolder {
+        class ViewHolderTask extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
             TextView textViewName;
             TextView textViewDeadline;
@@ -161,6 +148,16 @@ public class FragmentTask extends Fragment {
                 textViewDeadline = itemView.findViewById(R.id.dead_line);
                 checkIsDone = itemView.findViewById(R.id.check_is_done);
                 imageStarMark = itemView.findViewById(R.id.star_mark);
+
+                //Регистрируем
+                textViewName.setOnCreateContextMenuListener(this);
+            }
+
+            //Реализовываем метод
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(getAdapterPosition(), 1, 0, "Удалить");
+                menu.add(getAdapterPosition(), 2, 0, "Редактировать");
             }
         }
 
@@ -178,6 +175,7 @@ public class FragmentTask extends Fragment {
             viewHolderTask.textViewDeadline.setText(mArrayTasks.get(i).getDeadline().toString());
             viewHolderTask.checkIsDone.setChecked(mArrayTasks.get(i).getIsDone());
 
+            //Отображение важности
             if (mArrayTasks.get(i).getStarMark())
                 viewHolderTask.imageStarMark.setVisibility(View.VISIBLE);
             else viewHolderTask.imageStarMark.setVisibility(View.INVISIBLE);
@@ -186,16 +184,16 @@ public class FragmentTask extends Fragment {
             viewHolderTask.checkIsDone.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    toDoViewModel.changeIsDone(mArrayTasks.get(i));
+                    toDoViewModel.changeIsDone(mArrayTasks.get(i));//Обращение к БД в mainThread'e
                 }
             });
 
+            //Переход во внутренности задачи
             viewHolderTask.textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toDoViewModel.getObservableRootTasks().removeObservers(FragmentTask.this);
-                    changer.changeFragment(mArrayTasks.get(i).getId());
-
+                    toDoViewModel.getCurrentTasks().removeObservers(FragmentTask.this);
+                    changer.changeFragment(mArrayTasks.get(i).getId(), FRAGMENT_TASK);
                 }
             });
         }
@@ -206,5 +204,25 @@ public class FragmentTask extends Fragment {
         }
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
 
+        //В зависимости оттого, что нажато - удаление или редактирование.
+        if (item.getItemId() == 1) {
+
+            //Прежде, чем удалять задачу, удалим все ее подзадачи
+            for (Task t : toDoViewModel.getChildTasks(toDoViewModel.getTask(mArrayTasks.get(item.getGroupId()).getId()))) {
+                toDoViewModel.deleteTask(t);
+            }
+
+            //Удалим саму задачу, найдя ее айдишник в mArrayTasks
+            toDoViewModel.deleteTask(toDoViewModel.getTask(mArrayTasks.get(item.getGroupId()).getId()));
+        }else{
+
+            toDoViewModel.getCurrentTasks().removeObservers(FragmentTask.this);
+            changer.changeFragment(mArrayTasks.get(item.getGroupId()).getId(), EDIT_TASK_FRAGMENT);
+        }
+
+        return super.onContextItemSelected(item);
+    }
 }

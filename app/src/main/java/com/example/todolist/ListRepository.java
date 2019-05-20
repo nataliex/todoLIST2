@@ -243,6 +243,10 @@ public class ListRepository {
         return mListDAO.getObservableChildTasks(task.getId());
     }
 
+    public LiveData<List<Task>> receiveObservableChildTasks(Integer taskId){
+        return mListDAO.getObservableChildTasks(taskId);
+    }
+
     public List<Task> receiveAllTasks(){
         receiveTasksAsyncTask rTAT = new receiveTasksAsyncTask(mListDAO);
         try {
@@ -304,6 +308,6 @@ public class ListRepository {
 
     public void updateTask(Task task){
         updateTaskAsyncTask uTAT = new updateTaskAsyncTask(mListDAO);
-        uTAT.execute(task);
+        uTAT.execute(task);//TODO возможно асинхронное обращение к БД в main потоке!!!
     }
 }
