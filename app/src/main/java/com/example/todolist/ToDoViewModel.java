@@ -12,6 +12,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ToDoViewModel extends AndroidViewModel{
 
@@ -22,6 +24,8 @@ public class ToDoViewModel extends AndroidViewModel{
     private LiveData<List<Task>> mObservableCurrentTasks;
     private Task mTask;
     private List<Task> mNotobservableCurrentTasks;
+
+    ExecutorService service = Executors.newFixedThreadPool(1);
 
     public static final int CODE_ALLTASKS=-2;
     public static final int CODE_COMPLETEDTASKS=-3;
