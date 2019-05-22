@@ -90,30 +90,6 @@ public class ListRepository {
         }
     }
 
-    static private class deadlineTaskAsyncTask extends AsyncTask<Utility.DateNParent,Void,List<Task>>{
-        ListDAO mListDAO;
-        deadlineTaskAsyncTask(ListDAO listDAO){
-            mListDAO = listDAO;
-        }
-
-        @Override
-        protected List<Task> doInBackground(Utility.DateNParent... dnps) {
-            return mListDAO.getDeadlineTasks(dnps[0].mDate.getTime(),dnps[0].mParent);
-        }
-    }
-
-    static private class deadlineSpoiledTaskAsyncTask extends AsyncTask<Utility.DateNParent,Void,List<Task>>{
-        ListDAO mListDAO;
-        deadlineSpoiledTaskAsyncTask(ListDAO listDAO){
-            mListDAO = listDAO;
-        }
-
-        @Override
-        protected List<Task> doInBackground(Utility.DateNParent... dnps) {
-            return mListDAO.getSpoiledDeadlineTasks(dnps[0].mDate.getTime(),dnps[0].mParent);
-        }
-    }
-
     static private class receiveMarkTasksAsyncTask extends AsyncTask<Utility.StarNParent, Void, List<Task>>{
 
         private ListDAO mListDAO;
@@ -207,32 +183,20 @@ public class ListRepository {
         return null;
     }
 
-    public List<Task> receiveDeadlineTask(Date date,Integer pId){
-        Utility utility = new Utility();
-        Utility.DateNParent dnp = utility.new DateNParent(date,pId);
-        deadlineTaskAsyncTask dTAT = new deadlineTaskAsyncTask(mListDAO);
-        try{
-            return dTAT.execute(dnp).get();
-        }catch (Exception e){
-            e.printStackTrace();
-        }return null;
-    }
-
-    public List<Task> receiveSpoiledDeadlineTask(Date date,Integer pId){
-        Utility utility = new Utility();
-        Utility.DateNParent dnp = utility.new DateNParent(date,pId);
-        deadlineSpoiledTaskAsyncTask dSTAT = new deadlineSpoiledTaskAsyncTask(mListDAO);
-        try{
-            return dSTAT.execute(dnp).get();
-        }catch (Exception e){
-            e.printStackTrace();
-        }return null;
-    }
-
     public List<Task> receiveChildTasks(Task task){
         receiveTasksByIdAsyncTask rTAT = new receiveTasksByIdAsyncTask(mListDAO);
         try {
             return rTAT.execute(task.getId()).get();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> receiveChildTasks(Integer id){
+        receiveTasksByIdAsyncTask rTAT = new receiveTasksByIdAsyncTask(mListDAO);
+        try {
+            return rTAT.execute(id).get();
         }catch(Exception e){
             e.printStackTrace();
         }

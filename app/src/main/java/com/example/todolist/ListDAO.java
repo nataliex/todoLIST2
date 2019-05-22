@@ -46,22 +46,6 @@ interface ListDAO {
     @Query("SELECT * from TaskTable WHERE ParentId = :mParentId")
     LiveData<List<Task>> getObservableChildTasks(Integer mParentId);
 
-    @Query("SELECT * from TaskTable WHERE deadline > :currentTime "+
-            "AND ParentId LIKE :mParentId")
-    LiveData<List<Task>> getObservableDeadlineTasks(Long currentTime,Integer mParentId);
-
-    @Query("SELECT * from TaskTable WHERE deadline > :currentTime "+
-            "AND ParentId LIKE :mParentId")
-    List<Task> getDeadlineTasks(Long currentTime,Integer mParentId);
-
-    @Query("SELECT * from TaskTable WHERE deadline <= :currentTime " +
-            "AND ParentId LIKE :mParentId")
-    LiveData<List<Task>> getObservableSpoiledDeadlineTasks(Long currentTime,Integer mParentId);
-
-    @Query("SELECT * from TaskTable WHERE deadline <= :currentTime " +
-            "AND ParentId LIKE :mParentId")
-    List<Task> getSpoiledDeadlineTasks(Long currentTime,Integer mParentId);
-
     @Query("SELECT * from TaskTable WHERE IsDone LIKE :status " +
             "AND ParentId LIKE :mParentId ORDER BY Name ASC")
     List<Task> getStatusTasks(Boolean status,Integer mParentId);
@@ -87,4 +71,3 @@ interface ListDAO {
     @Update
     void update(Task task);
 }
-

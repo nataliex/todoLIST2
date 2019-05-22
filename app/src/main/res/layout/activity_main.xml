@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main">
 
     <!-- The main content view -->
     <LinearLayout
@@ -17,7 +18,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#E7E6E6"
+        android:background="@drawable/background_main"
         android:choiceMode="singleChoice"
         android:divider="#000000"
         android:dividerHeight="0dp"/>

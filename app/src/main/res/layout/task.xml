@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_contein"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
@@ -11,39 +12,42 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:textSize="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@+id/star_mark"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="20sp"
         tools:text="taskName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/task_name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:background="#B19F9F" />
 
     <CheckBox
         android:id="@+id/check_is_done"
+        android:theme="@style/MyCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="20dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"/>
 
     <ImageView
         android:id="@+id/star_mark"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_toEndOf="@+id/task_name"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/check_is_done"
         android:background="@drawable/starmark" />
-
-    <TextView
-        android:id="@+id/dead_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="53dp"
-        android:textSize="15dp"
-        tools:text="DEADLINE!!!" />
 
 </RelativeLayout>

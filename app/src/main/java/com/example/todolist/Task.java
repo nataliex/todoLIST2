@@ -12,6 +12,8 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
+
 @SuppressWarnings("WeakerAccess")
 @Entity(tableName =  "TaskTable")
 public class Task{
@@ -36,9 +38,6 @@ public class Task{
     @ColumnInfo(name = "isDone")
     private Boolean mIsDone;
 
-    @ColumnInfo(name = "deadline")
-    @TypeConverters({DateConverter.class})
-    private String mDeadline;
 
     @ColumnInfo(name = "Path")
     @TypeConverters({ArrayListConverter.class})
@@ -46,32 +45,29 @@ public class Task{
 
 
     @Ignore
-    Task(String name,String description,String  deadline,boolean isDone,Integer Id, boolean StarMark){
+    Task(String name,String description,boolean isDone,Integer Id, boolean StarMark){
         mName = name;
         mDescription = description;
-        mDeadline = deadline;
         mIsDone = isDone;
         mId = Id;
         mPath = new ArrayList<Integer>();
         mStarMark = StarMark;
     }
     @Ignore
-    Task(String name,String description,String deadline,boolean isDone, boolean StarMark){
+    Task(String name,String description,boolean isDone, boolean StarMark){
         mName = name;
         mDescription = description;
-        mDeadline = deadline;
         mIsDone = isDone;
         mPath = new ArrayList<Integer>();
         mStarMark = StarMark;
     }
-    Task(String mName,Integer mParentId,Boolean mIsDone,String mDeadline,
+    Task(String mName,Integer mParentId,Boolean mIsDone,
          String mDescription,ArrayList<Integer> mPath, Integer mId,Boolean mStarMark){
         this.mName = mName;
         this.mId = mId;
         this.mDescription = mDescription;
         this.mParentId = mParentId;
         this.mIsDone = mIsDone;
-        this.mDeadline = mDeadline;
         this.mPath = new ArrayList<Integer>();
         this.mPath.addAll(mPath);
         this.mStarMark = mStarMark;
@@ -105,10 +101,6 @@ public class Task{
         return mParentId;
     }
 
-    public String getDeadline() {
-        return mDeadline;
-    }
-
     public String getDescription() {
         return mDescription;
     }
@@ -135,10 +127,6 @@ public class Task{
         this.mParentId = mParentId;
     }
 
-    public void setDeadline(String mDeadline) {
-        this.mDeadline = mDeadline;
-    }
-
     public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
@@ -152,14 +140,16 @@ public class Task{
     }
 
     public static class ArrayListConverter{
-
         @TypeConverter
         public ArrayList<Integer> fromStringToArrayList(String string){
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
-            String[] prepStr = string.split(".");
-            for(int i=0;i<prepStr.length;i++){
-                arrayList.add(Integer.getInteger(prepStr[i]));
-            }
+            String[] prepStr;
+            if(string.contains(".")) {
+                prepStr = string.split(Pattern.quote("."));
+                for (int i = 0; i < string.split(Pattern.quote(".")).length; i++) {
+                    arrayList.add(Integer.parseInt(prepStr[i]));
+                }
+            } else arrayList.add(Integer.parseInt(string));
             return arrayList;
         }
 
@@ -170,27 +160,8 @@ public class Task{
                 sb.append(arrayList.get(i));
                 if(i!=arrayList.size()-1) sb.append('.');
             }
+            Log.d("StringBuilder",sb.toString());
             return sb.toString();
-        }
-    }
-
-    public static class DateConverter{
-        static final Long Indefinitely = Long.valueOf(-1);
-
-        @TypeConverter
-        public Long fromDateToLong(Date date){
-            if (date!=null)
-                return date.getTime();
-            else
-                return Indefinitely;
-        }
-
-        @TypeConverter
-        public Date fromLongToDate(Long wide){
-            if (wide!=-1)
-                return new Date(wide);
-            else
-                return null;
         }
     }
 }
