@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_main">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/backgroind_main">
 
     <EditText
         android:id="@+id/name_et"
@@ -46,16 +47,15 @@
         android:layout_marginEnd="20dp"
         android:textSize="16sp" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/selector_btn_add_task"
-        android:text="✓"
+        android:src="@mipmap/playlist_ok"
         android:textSize="50dp" />
 
     <TextView

@@ -1,12 +1,22 @@
 <resources>
     <string name="app_name">Список задач</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Список задач</string>
+    <string name="nav_header_subtitle">Создано людьми для людей</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tv_isGreat">Важно? Тыкни!</string>
-    <string name="Description">Пометки</string>
+    <string name="menu_home">Без фильтров</string>
+    <string name="menu_gallery">Невыполненные</string>
+    <string name="menu_slideshow">Важные</string>
+    <string name="menu_tools">Неважные</string>
+    <string name="menu_share">Загрузить задачу из сети</string>
+    <string name="menu_send">Отослать</string>
+    <string name="tv_NoTasks">У вас нет задач!</string>
+    <string name="tv_fragmentNoTask">У вас нет здесь никаких задач!</string>
     <string name="et_NameTask">Имя задачи</string>
-    <string name="tv_NoTasks">У вас нет никаких задач!</string>
-    <string name="btn_Load">Загрузить</string>
-    <string name="tv_fragmentNoTask">У вас нет здесь никаких подзадач!</string>
+    <string name="Description">Пометки</string>
+    <string name="tv_isGreat">Важно?</string>
+    <string name="menu_home2">Выполненные</string>
 </resources>
