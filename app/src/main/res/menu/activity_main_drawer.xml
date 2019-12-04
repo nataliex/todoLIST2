@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/all_tasks_menu"
+            android:icon="@mipmap/all_tasks_menu"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/isDone_tasks_menu"
+            android:icon="@mipmap/task_done_menu"
+            android:title="@string/menu_home2" />
+        <item
+            android:id="@+id/notDone_tasks_menu"
+            android:icon="@mipmap/task_not_done_menu"
+            android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/great_tasks_menu"
+            android:icon="@mipmap/task_great_menu"
+            android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/notGreat_tasks_menu"
+            android:icon="@mipmap/task_not_great_menu"
+            android:title="@string/menu_tools" />
+    </group>
+
+    <item android:title="Работа в сети Интернет">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+
+        </menu>
+    </item>
+
+</menu>

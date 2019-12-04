@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">972129250203-u7c35r6pbk8m07slou5rha5tgk2m2aa8.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://todotask-6f41b.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">972129250203</string>
+    <string name="google_api_key" translatable="false">AIzaSyBUWOBi9a1cwOWsX4h60OWWTqWkqsw0juE</string>
+    <string name="google_app_id" translatable="false">1:972129250203:android:b71105560897701d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBUWOBi9a1cwOWsX4h60OWWTqWkqsw0juE</string>
+    <string name="google_storage_bucket" translatable="false">todotask-6f41b.appspot.com</string>
+    <string name="project_id" translatable="false">todotask-6f41b</string>
+</resources>
